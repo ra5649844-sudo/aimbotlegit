@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auxilio - Ultimate Legit Aimbot</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Courier New', Courier, monospace; }
+        body { background: #000000; color: #f3f4f6; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; justify-content: center; }
+        .wrapper { width: 100%; max-width: 850px; background: #080808; border-radius: 14px; padding: 30px; box-shadow: 0 0 25px rgba(244, 63, 94, 0.25); border: 1.5px solid #ff0055; }
+        
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        h1 { color: #ff0055; font-size: 24px; text-shadow: 0 0 10px rgba(255, 0, 85, 0.5); }
+        
+        /* Toggle Switch Style */
+        .switch-container { display: flex; align-items: center; gap: 10px; }
+        .switch-label { color: #ff0055; font-size: 14px; font-weight: bold; }
+        .switch { position: relative; display: inline-block; width: 55px; height: 28px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #1a1a1a; transition: .3s; border-radius: 28px; border: 1px solid #ff0055; }
+        .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: #ff0055; transition: .3s; border-radius: 50%; }
+        input:checked + .slider { background-color: #ff0055; box-shadow: 0 0 12px #ff0055; }
+        input:checked + .slider:before { transform: translateX(27px); background-color: #000; }
+
+        .subtitle { color: #888; font-size: 13px; margin-bottom: 20px; }
+        .code-container { background: #030303; border: 1px solid #222; border-radius: 8px; padding: 15px; overflow-x: auto; color: #ff3377; font-size: 12px; line-height: 1.5; max-height: 400px; white-space: pre; box-shadow: inset 0 0 10px rgba(0,0,0,0.8); }
+        
+        .btn { display: inline-block; background: #ff0055; color: #fff; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: bold; margin-top: 20px; transition: all 0.3s; cursor: pointer; border: none; box-shadow: 0 0 15px rgba(255, 0, 85, 0.4); }
+        .btn:hover { background: #d90046; box-shadow: 0 0 25px rgba(255, 0, 85, 0.8); }
+        .footer { margin-top: 25px; font-size: 11px; color: #555; text-align: center; }
+        
+        #status-text { font-size: 12px; margin-top: 10px; color: #ff0055; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="wrapper">
+        <div class="header">
+            <h1>AUXILIO // LEGIT AIMBOT</h1>
+            <div class="switch-container">
+                <span class="switch-label" id="status-label">OFF</span>
+                <label class="switch">
+                    <input type="checkbox" id="aimbotToggle" onchange="toggleAimbot(this)">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+        <div class="subtitle">GitHub Pages Elite Web Wrapper &bull; Hard Rose Theme</div>
+        
+        <div class="code-container" id="lua-source">-- ========================================================
+-- Auxilio Elite Legit Drag & Snap Aimbot (Raw LUA)
+-- Theme: Dark & Hard Rose Core
+-- ========================================================
+
+local LegitBot = {
+    Active = true,
+    FOV = 90.0,
+    SmoothFactor = 0.25,     -- Legit humanized smoothing
+    HitboxBone = 8,          -- Head Bone target ID
+    DragMultiplier = 1.4     -- Powerful head alignment on drag
+}
+
+local function GetDist(p1, p2)
+    local dx = p2.x - p1.x
+    local dy = p2.y - p1.y
+    local dz = p2.z - p1.z
+    return math.sqrt(dx*dx + dy*dy + dz*dz)
+end
+
+function LegitBot:Run(cmd, me, enemies)
+    if not self.Active then return end
+
+    if cmd:IsDragging() or cmd:IsShooting() then
+        local targetHead = nil
+        local closestFOV = self.FOV
+        local screenCenter = GetScreenCenter()
+
+        for _, enemy in ipairs(enemies) do
+            if enemy and enemy:IsAlive() and enemy:GetTeam() ~= me:GetTeam() then
+                local bonePos = enemy:GetBonePosition(self.HitboxBone)
+                local screenPos = WorldToScreen(bonePos)
+
+                if screenPos.isVisible then
+                    local dist = GetDist(screenCenter, screenPos)
+                    if dist < closestFOV then
+                        closestFOV = dist
+                        targetHead = screenPos
+                    end
+                end
+            end
+        end
+
+        if targetHead then
+            local dX = (targetHead.x - screenCenter.x) * self.SmoothFactor
+            local dY = (targetHead.y - screenCenter.y) * self.SmoothFactor
+
+            cmd:SetViewAngles(dX * self.DragMultiplier, dY * self.DragMultiplier)
+        end
+    end
+end
+
+return LegitBot</div>
+
+        <div id="status-text">System Status: Standby</div>
+        <button class="btn" onclick="copyRawCode()">Copy Legit Lua Code</button>
+    </div>
+
+    <div class="footer">
+        Auxilio Engine &bull; Hosted on GitHub Pages
+    </div>
+
+    <script>
+        function toggleAimbot(checkbox) {
+            const label = document.getElementById("status-label");
+            const statusText = document.getElementById("status-text");
+            
+            if (checkbox.checked) {
+                label.innerText = "ACTIVE";
+                label.style.color = "#00ff66";
+                statusText.innerText = "System Status: Active Legit Aimbot Enabled (Hard Rose Core)";
+                statusText.style.color = "#00ff66";
+            } else {
+                label.innerText = "OFF";
+                label.style.color = "#ff0055";
+                statusText.innerText = "System Status: Standby";
+                statusText.style.color = "#ff0055";
+            }
+        }
+
+        function copyRawCode() {
+            const text = document.getElementById("lua-source").innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Legit Lua code copied to clipboard successfully!");
+            });
+        }
+    </script>
+</body>
+</html>
